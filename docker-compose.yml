@@ -1,0 +1,44 @@
+version: '3'
+
+volumes:
+  vol-share:
+  vol-mariadb:
+
+services:
+  ## --------------------------------------------
+  ## | Web Server Php7 and required Extensions
+  ## --------------------------------------------
+  web:
+    build:
+      context: ./.docker-compose/web
+      dockerfile: Dockerfile
+      args:
+        # none-root user
+        - PUID=${WEB_PUID}
+        - PGID=${WEB_PGID}
+        # xdebug
+        - INSTALL_XDEBUG=${WEB_INSTALL_XDEBUG}
+        # pdomysql
+        - INSTALL_PHP_PDOMYSQL=${WEB_INSTALL_PHP_PDOMYSQL}
+        # mongodb
+        - INSTALL_PHP_MONGODB=${WEB_INSTALL_PHP_MONGODB}
+        - INSTALL_PHP_MONGODB_VER=${WEB_INSTALL_PHP_MONGODB_VER}
+        # nodejs
+        - INSTALL_NODE=${WEB_INSTALL_NODE}
+    environment:
+      - HOST_IP=${HOST_IP}
+      - APPLICATION=${APPLICATION}
+      - INSTALL_XDEBUG=${WEB_INSTALL_XDEBUG}
+      # application specific environment
+      - PT_ENV=${WEB_PT_ENV}
+    expose:
+      - "80"
+      - "443"
+    ports:
+      - "${WEB_HTTP_PORT}:80"
+      - "${WEB_HTTPS_PORT}:443"
+    volumes:
+      - ${APPLICATION}:/var/www:cached
+      - vol-share:/v-share/
+      # change default site(s) configuration bt mount your local folder.
+      #- ./.docker-compose/web/nginx/sites/:/etc/nginx/sites-available/
