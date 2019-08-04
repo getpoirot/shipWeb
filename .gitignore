@@ -15,4 +15,6 @@ tmp/
 data/**
 !data/.gitkeep
 
+app/
+
 docker-compose.local.yml
