@@ -30,6 +30,7 @@ services:
       - INSTALL_XDEBUG=${WEB_INSTALL_XDEBUG}
       # application specific environment
       - PT_ENV=${WEB_PT_ENV}
+      - PT_ENV_PROFILE=${WEB_PT_ENV_PROFILE}
     expose:
       - "80"
       - "443"
