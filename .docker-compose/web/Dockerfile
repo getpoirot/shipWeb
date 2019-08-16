@@ -4,7 +4,7 @@
 # |   docker build -t nginx-php-fpm:latest .
 # |
 # |
-FROM nginx-php-fpm:latest
+FROM richarvey/nginx-php-fpm:latest
 
 
 ## Arguments:
@@ -64,7 +64,7 @@ RUN if [ ${INSTALL_PHP_MONGODB} = "true" ]; then \
     && printf "\033[0m\n" \
     && apk add --no-cache --virtual .persistent-deps \
         # for mongodb
-        libssl1.0 \
+        libssl1.1 \
     && MONGODB_FILENAME="mongodb-${INSTALL_PHP_MONGODB_VER}" \
            && MONGODB_SOURCE="https://github.com/mongodb/mongo-php-driver/releases/download/${INSTALL_PHP_MONGODB_VER}/${MONGODB_FILENAME}.tgz" \
            && curl -fSL --connect-timeout 30 ${MONGODB_SOURCE} | tar xz -C /tmp \
